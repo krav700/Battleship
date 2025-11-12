@@ -4,12 +4,17 @@ export function Ship(length) {
 
     function hit() {
         hitTimes++;
+
     }
 
     function isSunk() {
-        if (hitTimes == length) sunk = true;
+        if (hitTimes == length) {
+            sunk = true;
+            return sunk;
+        }
+        return sunk;
     }
 
-    return { length, hitTimes, sunk, hit, isSunk};
+    return { length, get hitTimes() { return hitTimes; }, get sunk() { return sunk }, hit, isSunk};
 }
 
