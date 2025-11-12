@@ -40,7 +40,7 @@ function tileObject(type) {
 
 export function Gameboard() {
     let playerBoard = new Array(10).fill().map(() => new Array(10).fill().map(() => tileObject(0)));
-
+    let sunkenShips = 0;
     //placeVertically
     //placeHorizontally
     //Idea: always presume you are placing the ships by holding them to the down/left side;
@@ -70,7 +70,25 @@ export function Gameboard() {
         }
     }
 
-    function receiveAttack() {
+    function receiveAttack(hitX, hitY) {
+        if (playerBoard[hitX][hitY].type == 1 || playerBoard[hitX][hitY].type == 3) {
+            console.log('Already shot there');
+            return;
+        }
+
+
+        if(playerBoard[hitX][hitY].type == 2) {
+            playerBoard[hitX][hitY].ship.hit();
+            playerBoard[hitX][hitY].type = 3;
+            if (playerBoard[hitX][hitY].isSunk) {
+                sunkenShips++;
+                if (sunkenShips == 5) {
+                    //endGame();
+                }
+            }
+        } else if(playerBoard[hitX][hitY].type == 0) {
+            playerBoard[hitX][hitY].type = 1;
+        }
 
     }
 
