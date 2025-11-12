@@ -100,3 +100,9 @@ export function Gameboard() {
         receiveAttack,
     };
 }
+
+export function Player() {
+    let playerBoard = Gameboard();
+
+    return { playerBoard }
+}
