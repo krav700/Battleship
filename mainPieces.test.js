@@ -57,6 +57,26 @@ describe('Gameboard()', () => {
         expect(board.playerBoard[2][0].type).toEqual(2);
     });
 
+    test('recieve attack changes type to 1 if it hits water', () => {
+        board.receiveAttack(0,0);
+        expect(board.playerBoard[0][0].type).toEqual(1);
+    });
 
+    test('recieve attack changes type to 3 if it hits a ship', () => {
+        board.placeShip(0,0,3);
+        board.receiveAttack(0,0);
+        expect(board.playerBoard[0][0].type).toEqual(3);
+    });
 
+    test('recieve attack sinks ship', () => {
+        board.placeShip(0,0,3);
+        board.receiveAttack(0,0);
+        board.receiveAttack(0,1);
+        board.receiveAttack(0,2);
+        expect(board.playerBoard[0][0].type).toEqual(3);
+        expect(board.playerBoard[0][1].type).toEqual(3);
+        expect(board.playerBoard[0][2].type).toEqual(3);
+        expect(board.playerBoard[0][0].ship.isSunk()).toBe(true);
+
+    });
 });
