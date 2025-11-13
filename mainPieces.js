@@ -35,49 +35,74 @@ function tileObject(type) {
         ship = tileShip;
     }
 
-    return {type, get ship() { return ship; }, setShip};
+    return {
+        type,
+        get ship() {
+            return ship;
+        },
+        setShip,
+    };
 }
 
 export function Gameboard() {
-    let playerBoard = new Array(10).fill().map(() => new Array(10).fill().map(() => tileObject(0)));
+    let playerBoard = new Array(10)
+        .fill()
+        .map(() => new Array(10).fill().map(() => tileObject(0)));
     let sunkenShips = 0;
     //placeVertically
     //placeHorizontally
     //Idea: always presume you are placing the ships by holding them to the down/left side;
-    function placeShip(placeV, placeH, shipLength, direction = 'Horitontal') {
+    function placeShip(placeV, placeH, shipLength, direction = "Horitontal") {
         if (placeV < 0 || placeV > 9 || placeH < 0 || placeH > 9) {
-            console.log('Invalid Coordinates');
-            return;
+            console.log("Invalid Coordinates");
+            return false;
         }
 
         const currentShip = Ship(shipLength);
-        if (direction == 'Vertical') {
+        if (direction == "Vertical") {
             while (placeV - shipLength + 1 < 0) {
                 placeV++;
+            }
+            let tempPlaceV = placeV;
+            for (let i = 0; i < currentShip.length; i++) {
+                if (playerBoard[tempPlaceV--][placeH].type == 2) {
+                    console.log("There is already a ship there");
+                    return false;
+                }
             }
             for (let i = 0; i < shipLength; i++) {
                 playerBoard[placeV][placeH].type = 2;
                 playerBoard[placeV--][placeH].setShip(currentShip);
             }
         } else {
-            while ((placeH + shipLength - 1) > 9) {
+            while (placeH + shipLength - 1 > 9) {
                 placeH--;
+            }
+            let tempPlaceH = placeH;
+            for (let i = 0; i < currentShip.length; i++) {
+                if (playerBoard[placeV][tempPlaceH++].type == 2) {
+                    console.log("There is already a ship there");
+                    return false;
+                }
             }
             for (let i = 0; i < shipLength; i++) {
                 playerBoard[placeV][placeH].type = 2;
                 playerBoard[placeV][placeH++].setShip(currentShip);
             }
         }
+        return true;
     }
 
     function receiveAttack(hitX, hitY) {
-        if (playerBoard[hitX][hitY].type == 1 || playerBoard[hitX][hitY].type == 3) {
-            console.log('Already shot there');
+        if (
+            playerBoard[hitX][hitY].type == 1 ||
+            playerBoard[hitX][hitY].type == 3
+        ) {
+            console.log("Already shot there");
             return;
         }
 
-
-        if(playerBoard[hitX][hitY].type == 2) {
+        if (playerBoard[hitX][hitY].type == 2) {
             playerBoard[hitX][hitY].ship.hit();
             playerBoard[hitX][hitY].type = 3;
             if (playerBoard[hitX][hitY].isSunk) {
@@ -86,10 +111,9 @@ export function Gameboard() {
                     //endGame();
                 }
             }
-        } else if(playerBoard[hitX][hitY].type == 0) {
+        } else if (playerBoard[hitX][hitY].type == 0) {
             playerBoard[hitX][hitY].type = 1;
         }
-
     }
 
     return {
@@ -104,5 +128,5 @@ export function Gameboard() {
 export function Player() {
     let playerBoard = Gameboard();
 
-    return { playerBoard }
+    return { playerBoard };
 }
