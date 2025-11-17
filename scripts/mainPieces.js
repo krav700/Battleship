@@ -49,6 +49,7 @@ export function Gameboard() {
         .fill()
         .map(() => new Array(10).fill().map(() => tileObject(0)));
     let sunkenShips = 0;
+    let loose = false;
     //placeVertically
     //placeHorizontally
     //Idea: always presume you are placing the ships by holding them to the down/left side;
@@ -103,12 +104,15 @@ export function Gameboard() {
         }
 
         if (playerBoard[hitX][hitY].type == 2) {
+            console.log('type 2');
             playerBoard[hitX][hitY].ship.hit();
             playerBoard[hitX][hitY].type = 3;
-            if (playerBoard[hitX][hitY].isSunk) {
+            if (playerBoard[hitX][hitY].ship.isSunk()) {
                 sunkenShips++;
+                console.log('SUNKEN')
+                console.log(sunkenShips);
                 if (sunkenShips == 5) {
-                    //endGame();
+                    loose = true;
                 }
             }
         } else if (playerBoard[hitX][hitY].type == 0) {
@@ -122,11 +126,25 @@ export function Gameboard() {
         },
         placeShip,
         receiveAttack,
+        get loose() {
+            return loose;
+        }
     };
 }
 
 export function Player() {
+    let placedShips = 0;
+
+    function placedShip() {
+        placedShips++;
+    }
+
     let playerBoard = Gameboard();
 
-    return { playerBoard };
+    function resetPlayerBoard() {
+        playerBoard = Gameboard();
+    }
+
+
+    return { get playerBoard() { return playerBoard;}, resetPlayerBoard, get placedShips() { return placedShips;}, placedShip };
 }
