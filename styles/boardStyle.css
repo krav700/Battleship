@@ -1,0 +1,61 @@
+#content {
+    grid-row-start: 2;
+    grid-row-end: 3;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.board {
+    height: 500px;
+    width: 500px;
+    background-color: black;
+}
+
+.water-tile, .hit-water-tile, .hit-ship-tile, .friendly-ship-tile {
+    height: 50px;
+    width: 50px;
+    background-color: var(--water-tile-color);
+    outline: dotted white;
+}
+
+.friendly-ship-tile {
+    background: var(--friendly-ship-tile-color);
+}
+
+.hit-water-tile {
+    background-color: var(--hit-water-tile-color);
+}
+
+.target-tile {
+    background: var(--target-tile-color);
+}
+
+.water-tile:active {
+    background: var(--active-target-tile-color);
+}
+
+.water-tile.no-active:active {
+    background-color: var(--target-tile-color);
+}
+
+.hit-ship-tile {
+    background: var(--hit-ship-tile-color);
+}
+
+.board {
+    display: grid;
+    grid-template: repeat(10, 50px) / repeat(10, 50px);
+    position: relative;
+}
+
+.board.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: black;
+    width: 500px;
+    height: 500px;
+}
