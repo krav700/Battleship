@@ -41,7 +41,23 @@
 }
 
 .hit-ship-tile {
+    position: relative;
     background: var(--hit-ship-tile-color);
+}
+
+.explode {
+    position: relative;
+}
+
+.hit-ship-tile.explode::after {
+    content: "";
+    left: 0;
+    top: 0;
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    background: url('../assets/explosionVideo.mp4') no-repeat center;
+    background-size: contain;
 }
 
 .board {

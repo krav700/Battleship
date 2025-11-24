@@ -111,6 +111,7 @@ function attackTile(tile, selectPlayer, waterTile) {
     }
     if (tile.type == 2) {
         waterTile.classList.add("hit-ship-tile");
+        addExplosion(waterTile);
         useRecieveAttack(selectPlayer, waterTile);
     } else if (tile.type == 0) {
         useRecieveAttack(selectPlayer, waterTile);
@@ -119,6 +120,22 @@ function attackTile(tile, selectPlayer, waterTile) {
     if (selectPlayer.playerBoard.loose) {
         winner(returnOtherPlayer(selectPlayer));
     }
+}
+
+function addExplosion(waterTile) {
+    const videoEl = document.createElement('video');
+    videoEl.muted = true;
+    videoEl.playsInline = true;
+    const source = document.createElement('source');
+    source.src = "../assets/explosion.gif";
+    source.type = 'video/mp4';
+    videoEl.append(source);
+    videoEl.currentTime = 0;
+    videoEl.play();
+    waterTile.append(videoEl);
+    videoEl.onended = () => {
+        waterTile.remove(videoEl)
+    };
 }
 
 function useRecieveAttack(selectPlayer, waterTile) {
