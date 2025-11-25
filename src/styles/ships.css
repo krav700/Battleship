@@ -1,0 +1,73 @@
+.ships-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+#content > .ships-container {
+    padding-right: 5rem;
+}
+
+.board + .ships-container {
+    padding-left: 5rem;
+}
+
+.ship {
+    background-color: blue;
+    height: 50px;
+    outline: dotted white;
+}
+
+.biggest-ship {
+    width: 250px;
+}
+
+.big-ship {
+    width: 200px;
+}
+
+.medium-ship {
+    width: 150px;
+}
+
+.small-ship {
+    width: 100px;
+}
+
+.rotate-dragging {
+    width: 50px;
+}
+
+.biggest-ship.rotate-dragging {
+    height: 250px;
+}
+
+.big-ship.rotate-dragging {
+    height: 200px;
+}
+
+.medium-ship.rotate-dragging {
+    height: 150px;
+}
+
+.small-ship.rotate-dragging {
+    height: 100px;
+}
+
+.dragging {
+    opacity: 0.5;
+}
+
+.rotate-container {
+    flex-direction: row;
+}
+
+.playerTwo-ships.rotate-container {
+    flex-direction: row-reverse;
+}
+
+.placed-ship {
+    background-color: darkblue;
+}
