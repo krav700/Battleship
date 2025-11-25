@@ -299,8 +299,8 @@ function dropShip() {
 function winner(selectPlayer) {
     passTurn();
     if (selectPlayer == playerOne) {
-        passTurnButton.textContent = "Player One Winner!";
-    } else passTurnButton.textContent = "Player Two Winner!";
+        passTurnButton.textContent = "Player Two Winner!";
+    } else passTurnButton.textContent = "Player One Winner!";
     updateAllyBoard(playerOne);
     updateAllyBoard(playerTwo);
     boards[0].classList.remove("active");
