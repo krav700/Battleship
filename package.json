@@ -1,11 +1,12 @@
 {
-  "type": "module",
   "name": "battleship",
   "version": "1.0.0",
   "description": "The game of Battleships!",
   "main": "main.js",
   "scripts": {
-    "test": "jest --watchAll --verbose"
+    "test": "jest --watchAll --verbose",
+    "start": "webpack serve --open --config ./webpack/webpack.dev.js",
+    "build": "webpack --config ./webpack/webpack.prod.js"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
     "babel-jest": "^30.2.0",
     "css-loader": "^7.1.2",
     "html-loader": "^5.1.0",
+    "html-webpack-plugin": "^5.6.5",
     "jest": "^30.2.0",
     "style-loader": "^4.0.0",
     "webpack": "^5.103.0",
