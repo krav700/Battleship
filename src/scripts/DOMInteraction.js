@@ -3,6 +3,7 @@ import "../styles/styles.css";
 import "../styles/ships.css";
 import { Player } from "./mainPieces.js";
 import explosionVideo from "../assets/explosionVideo.mp4";
+import { playerOneName, playerTwoName } from "./header.js";
 
 const boards = document.querySelectorAll(".board");
 boards[0].classList.add("active");
@@ -19,8 +20,11 @@ function passedTheTurn() {
 
 const playerOneBoard = document.querySelector(".playerOne-board");
 const playerTwoBoard = document.querySelector(".playerTwo-board");
-const playerOne = Player();
-const playerTwo = Player();
+export const playerOne = Player();
+playerOne.setPlayerName("Player One");
+export const playerTwo = Player();
+playerTwo.setPlayerName("Player Two");
+
 let currentWaterTile;
 let currentWaterTileAll;
 let droppingPlayer;
@@ -190,7 +194,7 @@ function returnOtherPlayer(selectPlayer) {
     if (selectPlayer == playerOne) {
         return playerTwo;
     }
-    return playerTwo;
+    return playerOne;
 }
 
 function passTurn() {
@@ -298,9 +302,9 @@ function dropShip() {
 
 function winner(selectPlayer) {
     passTurn();
-    if (selectPlayer == playerOne) {
-        passTurnButton.textContent = "Player Two Winner!";
-    } else passTurnButton.textContent = "Player One Winner!";
+    if (selectPlayer == playerTwo) {
+        passTurnButton.textContent = `Winner: ${playerTwoName}`;
+    } else passTurnButton.textContent = `Winner: ${playerOneName}`;
     updateAllyBoard(playerOne);
     updateAllyBoard(playerTwo);
     boards[0].classList.remove("active");

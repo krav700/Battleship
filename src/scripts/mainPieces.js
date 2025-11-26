@@ -104,12 +104,12 @@ export function Gameboard() {
         }
 
         if (playerBoard[hitX][hitY].type == 2) {
-            console.log('type 2');
+            console.log("type 2");
             playerBoard[hitX][hitY].ship.hit();
             playerBoard[hitX][hitY].type = 3;
             if (playerBoard[hitX][hitY].ship.isSunk()) {
                 sunkenShips++;
-                console.log('SUNKEN')
+                console.log("SUNKEN");
                 console.log(sunkenShips);
                 if (sunkenShips == 5) {
                     loose = true;
@@ -128,11 +128,17 @@ export function Gameboard() {
         receiveAttack,
         get loose() {
             return loose;
-        }
+        },
     };
 }
 
 export function Player() {
+    let playerName = "";
+
+    function setPlayerName(name) {
+        playerName = name;
+    }
+
     let placedShips = 0;
 
     function placedShip() {
@@ -145,6 +151,18 @@ export function Player() {
         playerBoard = Gameboard();
     }
 
-
-    return { get playerBoard() { return playerBoard;}, resetPlayerBoard, get placedShips() { return placedShips;}, placedShip };
+    return {
+        get playerName() {
+            return playerName;
+        },
+        setPlayerName,
+        get playerBoard() {
+            return playerBoard;
+        },
+        resetPlayerBoard,
+        get placedShips() {
+            return placedShips;
+        },
+        placedShip,
+    };
 }
