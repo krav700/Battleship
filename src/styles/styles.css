@@ -90,9 +90,55 @@ body {
 #header {
     margin-top: 5rem;
     display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.header-center {
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+input {
+    height: 75px;
+    background: transparent;
+    border: none;
+    color: aliceblue;
+    font-size: 4rem;
+    width: 300px;
+    position: relative;
+}
+
+input:focus {
+    background-color: var(--bg-color);
+    box-shadow: inset 0px 0px 25px black;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.name-span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 75px;
+    background: transparent;
+    border: none;
+    color: aliceblue;
+    font-size: 4rem;
+    width: 300px;
+}
+
+.name-span::before {
+    position: absolute;
+    left: -10px;
+    top: 0;
+    content: var(--text-content);
+    color: black;
+    z-index: -1;
 }
 
 .buttons-container {
