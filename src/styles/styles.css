@@ -107,12 +107,16 @@ input {
     border: none;
     color: aliceblue;
     font-size: 4rem;
+    padding-left: 8px;
     width: 300px;
     position: relative;
 }
 
 input:focus {
     background-color: var(--bg-color);
+    position: relative;
+    left: -8px;
+    top: 10.5px;
     box-shadow: inset 0px 0px 25px black;
 }
 
