@@ -450,7 +450,11 @@ function winner(selectPlayer) {
     passTurn();
     if (selectPlayer == playerTwo) {
         passTurnButton.textContent = `Winner: ${playerTwoName}`;
-    } else passTurnButton.textContent = `Winner: ${playerOneName}`;
+        playerOneBoard.classList.add('looser');
+    } else {
+        passTurnButton.textContent = `Winner: ${playerOneName}`;
+        playerTwoBoard.classList.add('looser');
+    }
     updateAllyBoard(playerOne);
     updateAllyBoard(playerTwo);
     boards[0].classList.remove("active");
