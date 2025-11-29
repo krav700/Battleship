@@ -2,7 +2,7 @@ import "../styles/boardStyle.css";
 import "../styles/styles.css";
 import "../styles/ships.css";
 import { Player } from "./mainPieces.js";
-import explosionVideo from "../assets/explosionVideo.mp4";
+import explosionVideo from "../assets/explosionVideo.webm";
 import { playerOneName, playerTwoName } from "./header.js";
 
 const boards = document.querySelectorAll(".board");
@@ -123,6 +123,11 @@ function attackTile(tile, selectPlayer, waterTile) {
         useRecieveAttack(selectPlayer, waterTile);
         if (tile.ship.isSunk()) {
             explodeEntireShip(tile.ship, selectPlayer);
+            const allPlacedShips = document.querySelectorAll(".placed-ship-on-board");
+            allPlacedShips.forEach((ship) => {
+                ship.parentElement.removeChild(ship.parentElement.firstChild);
+            });
+            placeRemoveShipsImages(returnOtherPlayer(selectPlayer));
         }
     } else if (tile.type == 0) {
         useRecieveAttack(selectPlayer, waterTile);
@@ -157,13 +162,13 @@ function addExplosion(waterTile) {
         videoEl.playsInline = true;
         const source = document.createElement('source');
         source.src = explosionVideo;
-        source.type = 'video/mp4';
+        source.type = 'video/webm';
         videoEl.append(source);
         videoEl.currentTime = 0;
         waterTile.append(videoEl);
         videoEl.play();
         videoEl.onended = () => {
-            waterTile.textContent = "";
+            waterTile.removeChild(waterTile.firstChild);
         };
     }
 }
@@ -183,10 +188,28 @@ function swapPlayers(selectPlayer) {
         passTurn();
         updateAllyBoard(playerOne);
         updateEnemyBoard(playerTwo);
+        const allPlacedShips = document.querySelectorAll(".placed-ship-on-board");
+        if (playerOne.placedShips == 5 && playerTwo.placedShips == 5 || playerOne.placedShips == 5 && playerTwo.placedShips == 0) {
+            allPlacedShips.forEach((ship) => {
+                ship.parentElement.removeChild(ship.parentElement.firstChild);
+            });
+            if (playerOne.placedShips == 5 && playerTwo.placedShips == 5) {
+                placeRemoveShipsImages(selectPlayer);
+            }
+        }
     } else {
         passTurn();
         updateAllyBoard(playerTwo);
         updateEnemyBoard(playerOne);
+        const allPlacedShips = document.querySelectorAll(".placed-ship-on-board");
+        if (playerOne.placedShips == 5 && playerTwo.placedShips == 5 || playerOne.placedShips == 5 && playerTwo.placedShips == 0) {
+            allPlacedShips.forEach((ship) => {
+                ship.parentElement.removeChild(ship.parentElement.firstChild);
+            });
+            if (playerOne.placedShips == 5 && playerTwo.placedShips == 5) {
+                placeRemoveShipsImages(selectPlayer);
+            }
+        }
     }
 }
 
@@ -248,7 +271,9 @@ function dropShip() {
         draggableShipLength = 4;
     } else if (draggableShip.classList.contains("medium-ship")) {
         draggableShipLength = 3;
-    } else if (draggableShip.classList.contains("small-ship")) {
+    } else if (draggableShip.classList.contains("patrol-ship")) {
+        draggableShipLength = 2;
+    } else if (draggableShip.classList.contains("help-ship")) {
         draggableShipLength = 2;
     }
     const waterTileArray = [...currentWaterTileAll];
@@ -271,6 +296,7 @@ function dropShip() {
             updateAllyBoard(droppingPlayer);
             droppingPlayer.placedShip();
         }
+        placeShipSprite(currentWaterTile, draggableShipLength, draggableShip, false);
     } else {
         if (
             droppingPlayer.playerBoard.placeShip(
@@ -284,6 +310,43 @@ function dropShip() {
             draggableShip.classList.add("placed-ship");
             updateAllyBoard(droppingPlayer);
             droppingPlayer.placedShip();
+        }
+        placeShipSprite(currentWaterTile, draggableShipLength, draggableShip, true);
+    }
+    if (draggableShip.classList.contains("biggest-ship")) {
+        droppingPlayer.playerShips.placedShipTiles.biggestShip.tile = currentWaterTile;
+        droppingPlayer.playerShips.placedShipTiles.biggestShip.ship = draggableShip;
+        droppingPlayer.playerShips.placedShipTiles.biggestShip.shipObejct = droppingPlayer.playerBoard.playerBoard[shipX][shipY].ship;
+        if (verticalPlacement) {
+            droppingPlayer.playerShips.placedShipTiles.biggestShip.vertical = true;
+        }
+    } else if (draggableShip.classList.contains("big-ship")) {
+        droppingPlayer.playerShips.placedShipTiles.bigShip.tile = currentWaterTile;
+        droppingPlayer.playerShips.placedShipTiles.bigShip.ship = draggableShip;
+        droppingPlayer.playerShips.placedShipTiles.bigShip.shipObejct = droppingPlayer.playerBoard.playerBoard[shipX][shipY].ship;
+        if (verticalPlacement) {
+            droppingPlayer.playerShips.placedShipTiles.bigShip.vertical = true;
+        }
+    } else if (draggableShip.classList.contains("medium-ship")) {
+        droppingPlayer.playerShips.placedShipTiles.mediumShip.tile = currentWaterTile;
+        droppingPlayer.playerShips.placedShipTiles.mediumShip.ship = draggableShip;
+        droppingPlayer.playerShips.placedShipTiles.mediumShip.shipObejct = droppingPlayer.playerBoard.playerBoard[shipX][shipY].ship;
+        if (verticalPlacement) {
+            droppingPlayer.playerShips.placedShipTiles.mediumShip.vertical = true;
+        }
+    } else if (draggableShip.classList.contains("patrol-ship")) {
+        droppingPlayer.playerShips.placedShipTiles.patrolShip.tile = currentWaterTile;
+        droppingPlayer.playerShips.placedShipTiles.patrolShip.ship = draggableShip;
+        droppingPlayer.playerShips.placedShipTiles.patrolShip.shipObejct = droppingPlayer.playerBoard.playerBoard[shipX][shipY].ship;
+        if (verticalPlacement) {
+            droppingPlayer.playerShips.placedShipTiles.patrolShip.vertical = true;
+        }
+    } else if (draggableShip.classList.contains("help-ship")) {
+        droppingPlayer.playerShips.placedShipTiles.helpShip.tile = currentWaterTile;
+        droppingPlayer.playerShips.placedShipTiles.helpShip.ship = draggableShip;
+        droppingPlayer.playerShips.placedShipTiles.helpShip.shipObejct = droppingPlayer.playerBoard.playerBoard[shipX][shipY].ship;
+        if (verticalPlacement) {
+            droppingPlayer.playerShips.placedShipTiles.helpShip.vertical = true;
         }
     }
     if (droppingPlayer.placedShips == 5) {
@@ -299,6 +362,89 @@ function dropShip() {
         }
     }
 }
+
+function placeRemoveShipsImages(selectPlayer) {
+    const playerShipsShortcut = selectPlayer.playerShips.placedShipTiles;
+    placeShipSprite(playerShipsShortcut.biggestShip.tile, playerShipsShortcut.biggestShip.length, playerShipsShortcut.biggestShip.ship, playerShipsShortcut.biggestShip.vertical);
+    placeShipSprite(playerShipsShortcut.bigShip.tile, playerShipsShortcut.bigShip.length, playerShipsShortcut.bigShip.ship, playerShipsShortcut.bigShip.vertical);
+    placeShipSprite(playerShipsShortcut.mediumShip.tile, playerShipsShortcut.mediumShip.length, playerShipsShortcut.mediumShip.ship, playerShipsShortcut.mediumShip.vertical);
+    placeShipSprite(playerShipsShortcut.patrolShip.tile, playerShipsShortcut.patrolShip.length, playerShipsShortcut.patrolShip.ship, playerShipsShortcut.patrolShip.vertical);
+    placeShipSprite(playerShipsShortcut.helpShip.tile, playerShipsShortcut.helpShip.length, playerShipsShortcut.helpShip.ship, playerShipsShortcut.helpShip.vertical);
+    const otherPlayer = returnOtherPlayer(selectPlayer);
+    const otherPlayerShips = otherPlayer.playerShips.placedShipTiles;
+    if (otherPlayerShips.biggestShip.shipObejct.isSunk()) {
+        placeShipSprite(otherPlayerShips.biggestShip.tile, otherPlayerShips.biggestShip.length, otherPlayerShips.biggestShip.ship, otherPlayerShips.biggestShip.vertical);
+    } if (otherPlayerShips.bigShip.shipObejct.isSunk()) {
+        placeShipSprite(otherPlayerShips.bigShip.tile, otherPlayerShips.bigShip.length, otherPlayerShips.bigShip.ship, otherPlayerShips.bigShip.vertical);
+    } if (otherPlayerShips.mediumShip.shipObejct.isSunk()) {
+        placeShipSprite(otherPlayerShips.mediumShip.tile, otherPlayerShips.mediumShip.length, otherPlayerShips.mediumShip.ship, otherPlayerShips.mediumShip.vertical);
+    } if (otherPlayerShips.patrolShip.shipObejct.isSunk()) {
+        placeShipSprite(otherPlayerShips.patrolShip.tile, otherPlayerShips.patrolShip.length, otherPlayerShips.patrolShip.ship, otherPlayerShips.patrolShip.vertical);
+    } if (otherPlayerShips.helpShip.shipObejct.isSunk()) {
+        placeShipSprite(otherPlayerShips.helpShip.tile, otherPlayerShips.helpShip.length, otherPlayerShips.helpShip.ship, otherPlayerShips.helpShip.vertical);
+    }
+}
+
+function placeShipSprite(placingTile, draggableShipLength, draggableShip, vertical) {
+    const shipElement = document.createElement('div');
+
+    const waterTileArray = [...currentWaterTileAll];
+    let tileIndex = waterTileArray.findIndex(
+        (tile) => tile == placingTile
+    );
+    if (!vertical) {
+        if (tileIndex % 10 + draggableShipLength - 1 > 9) {
+            while (tileIndex % 10 + draggableShipLength - 1 > 9) {
+                tileIndex--;
+            }
+        }
+        console.log(tileIndex);
+    } else {
+        console.log(tileIndex);
+        if (tileIndex % 10 == 0) {
+            if (tileIndex / 10 % 10 + draggableShipLength - 1 > 9) {
+                while (tileIndex / 10 % 10 + draggableShipLength - 1 > 9) {
+                    tileIndex -= 10;
+                }
+            }
+        } else {
+            if (tileIndex / 10 % 10 + draggableShipLength - 2 > 9) {
+                while (tileIndex / 10 % 10 + draggableShipLength - 2 > 9) {
+                    tileIndex -= 10;
+                }
+            }
+        }
+        console.log(tileIndex);
+    }
+    placingTile = waterTileArray[tileIndex];
+
+    shipElement.classList.add('placed-ship-on-board');
+    switch (draggableShipLength) {
+        case 5:
+            shipElement.classList.add('biggest-ship', 'ship');
+            break;
+        case 4:
+            shipElement.classList.add('big-ship','ship');
+            break;
+        case 3:
+            shipElement.classList.add('medium-ship','ship');
+            break;
+        case 2:
+            if (draggableShip.classList.contains('patrol-ship')) {
+                shipElement.classList.add('patrol-ship','ship');
+            } else {
+                shipElement.classList.add('help-ship', 'ship');
+            }
+            break;
+        default:
+            break;
+        }
+    if (vertical) {
+        shipElement.classList.add('rotate-dragging');
+    }
+    placingTile.append(shipElement);
+}
+
 
 function winner(selectPlayer) {
     passTurn();
