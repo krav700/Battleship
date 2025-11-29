@@ -61,19 +61,21 @@ export function Gameboard() {
 
         const currentShip = Ship(shipLength);
         if (direction == "Vertical") {
-            while (placeV - shipLength + 1 < 0) {
-                placeV++;
+            while (placeV + shipLength - 1 > 9) {
+                placeV--;
             }
+            console.log(placeV);
             let tempPlaceV = placeV;
+            console.log(tempPlaceV);
             for (let i = 0; i < currentShip.length; i++) {
-                if (playerBoard[tempPlaceV--][placeH].type == 2) {
+                if (playerBoard[tempPlaceV++][placeH].type == 2) {
                     console.log("There is already a ship there");
                     return false;
                 }
             }
             for (let i = 0; i < shipLength; i++) {
                 playerBoard[placeV][placeH].type = 2;
-                playerBoard[placeV--][placeH].setShip(currentShip);
+                playerBoard[placeV++][placeH].setShip(currentShip);
             }
         } else {
             while (placeH + shipLength - 1 > 9) {
@@ -104,7 +106,6 @@ export function Gameboard() {
         }
 
         if (playerBoard[hitX][hitY].type == 2) {
-            console.log("type 2");
             playerBoard[hitX][hitY].ship.hit();
             playerBoard[hitX][hitY].type = 3;
             if (playerBoard[hitX][hitY].ship.isSunk()) {
@@ -151,6 +152,8 @@ export function Player() {
         playerBoard = Gameboard();
     }
 
+    let playerShips = placingShipsImages();
+
     return {
         get playerName() {
             return playerName;
@@ -164,5 +167,43 @@ export function Player() {
             return placedShips;
         },
         placedShip,
+        playerShips
     };
+}
+
+function placingShipsImages() {
+    let placedShipTiles = {
+        biggestShip: {
+            ship: undefined,
+            shipObject: undefined,
+            length: 5,
+            tile: undefined,
+            vertical: false
+        },
+        bigShip: {
+            ship: undefined,
+            length: 4,
+            tile: undefined,
+            vertical: false
+        },
+        mediumShip: {
+            ship: undefined,
+            length: 3,
+            tile: undefined,
+            vertical: false
+        },
+        patrolShip: {
+            ship: undefined,
+            length: 2,
+            tile: undefined,
+            vertical: false
+        },
+        helpShip: {
+            ship: undefined,
+            length: 2,
+            tile: undefined,
+            vertical: false
+        },
+    };
+    return { placedShipTiles };
 }
