@@ -176,9 +176,9 @@ h1::before {
     color: white;
     background-color: gray;
     position: absolute;
-    z-index: 15;
-    left: 85%;
-    top: 47%;
+    z-index: 25;
+    left: 43%;
+    top: 60%;
     width: 150px;
     scale: 1.5;
 }
