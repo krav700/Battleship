@@ -15,25 +15,46 @@
 }
 
 .ship {
-    background-color: blue;
+    background: transparent;
     height: 50px;
     outline: dotted white;
+    overflow: visible;
+    position: relative;
+    z-index: 5;
+}
+
+.placed-ship-on-board {
+    pointer-events: none;
 }
 
 .biggest-ship {
     width: 250px;
+    background: url("../assets/ShipBattleshipHullHorizontal.png") no-repeat center;
+    background-size: 95%;
 }
 
 .big-ship {
     width: 200px;
+    background: url("../assets/ShipCarrierHullHorizontal.png") no-repeat center;
+    background-size: 85%;
 }
 
 .medium-ship {
     width: 150px;
+    background: url("../assets/ShipCruiserHullHorizontal.png") no-repeat center;
+    background-size: 95%;
 }
 
-.small-ship {
+.patrol-ship {
     width: 100px;
+    background: url("../assets/ShipPatrolHullHorizontal.png") no-repeat center;
+    background-size: 90%;
+}
+
+.help-ship {
+    width: 100px;
+    background: url("../assets/ShipRescueHorizontal.png") no-repeat center;
+    background-size: 90%;
 }
 
 .rotate-dragging {
@@ -42,18 +63,32 @@
 
 .biggest-ship.rotate-dragging {
     height: 250px;
+    background: url("../assets/ShipBattleshipHullVertical.png") no-repeat center;
+    background-size: 70%;
+
 }
 
 .big-ship.rotate-dragging {
     height: 200px;
+    background: url("../assets/ShipCarrierHullVertical.png") no-repeat center;
+    background-size: 95%;
 }
 
 .medium-ship.rotate-dragging {
     height: 150px;
+    background: url("../assets/ShipCruiserHullVertical.png") no-repeat center;
 }
 
-.small-ship.rotate-dragging {
+.patrol-ship.rotate-dragging {
     height: 100px;
+    background: url("../assets/ShipPatrolHullVertical.png") no-repeat center;
+    background-size: 40%;
+}
+
+.help-ship.rotate-dragging {
+    height: 100px;
+    background: url("../assets/ShipRescueVertical.png") no-repeat center;
+    background-size: 30%;
 }
 
 .dragging {
@@ -69,5 +104,5 @@
 }
 
 .placed-ship {
-    background-color: darkblue;
+    background-color: darkblue !important; 
 }
