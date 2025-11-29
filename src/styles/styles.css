@@ -176,7 +176,7 @@ h1::before {
     color: white;
     background-color: gray;
     position: absolute;
-    z-index: 5;
+    z-index: 15;
     left: 85%;
     top: 47%;
     width: 150px;
@@ -201,6 +201,12 @@ h1::before {
 }
 
 video {
+    position: absolute;
     height: 50px;
     width: 50px;
+    z-index: 15;
+    top: -30px;
+    left: -2px;
+    scale: 150%;
+    pointer-events: none;
 }
