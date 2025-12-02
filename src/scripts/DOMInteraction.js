@@ -20,9 +20,9 @@ function passedTheTurn() {
 
 const playerOneBoard = document.querySelector(".playerOne-board");
 const playerTwoBoard = document.querySelector(".playerTwo-board");
-export const playerOne = Player();
+export let playerOne = Player();
 playerOne.setPlayerName("Player One");
-export const playerTwo = Player();
+export let playerTwo = Player();
 playerTwo.setPlayerName("Player Two");
 
 let currentWaterTile;
@@ -168,7 +168,7 @@ function addExplosion(waterTile) {
         waterTile.append(videoEl);
         videoEl.play();
         videoEl.onended = () => {
-            waterTile.removeChild(waterTile.firstChild);
+            waterTile.removeChild(videoEl);
         };
     }
 }
@@ -227,15 +227,42 @@ function passTurn() {
 }
 
 const playButton = document.querySelector(".play-button");
+
 const resetButton = document.querySelector(".reset-button");
-resetButton.addEventListener("click", () => {
+resetButton.addEventListener("click", resetGame);
+
+function resetGame() {
     playerOne.resetPlayerBoard();
     updateAllyBoard(playerOne);
     updateEnemyBoard(playerTwo);
     playerTwo.resetPlayerBoard();
     updateAllyBoard(playerTwo);
     updateEnemyBoard(playerOne);
-});
+    const waterTileAll = document.querySelectorAll(".water-tile");
+    let shipCount = 0;
+    waterTileAll.forEach((tile) => {
+        tile.textContent = "";
+        tile.classList.remove("hit-water-tile");
+        tile.classList.remove("friendly-ship-tile");
+        tile.classList.remove("hit-ship-tile");
+    });
+    const shipsAll = document.querySelectorAll(".ship");
+    shipsAll.forEach((ship) => {
+        shipCount++;
+        if (ship.classList.contains("placed-ship")) {
+            ship.classList.remove("placed-ship");
+            if (shipCount < 6) {
+                ship.draggable = true;
+            }
+        }
+    });
+    passTurnButton.classList.add("dissappear");
+    playerOneBoard.classList.remove('looser');
+    playerTwoBoard.classList.remove('looser');
+    passTurnButton.textContent = "Passed The Turn";
+    passTurnButton.addEventListener("click", passedTheTurn);
+    passTurnButton.removeEventListener("click", resetGame);
+};
 
 const ships = document.querySelectorAll(".ship");
 let verticalPlacement = false;
@@ -460,4 +487,5 @@ function winner(selectPlayer) {
     boards[0].classList.remove("active");
     boards[1].classList.remove("active");
     passTurnButton.removeEventListener("click", passedTheTurn);
+    passTurnButton.addEventListener("click", resetGame);
 }
