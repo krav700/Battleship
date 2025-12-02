@@ -469,6 +469,13 @@ function placeShipSprite(placingTile, draggableShipLength, draggableShip, vertic
     if (vertical) {
         shipElement.classList.add('rotate-dragging');
     }
+
+    if (placingTile.firstChild) {
+        if (placingTile.querySelector("div")) {
+            return;
+        }
+    }
+    
     placingTile.append(shipElement);
 }
 
