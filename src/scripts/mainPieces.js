@@ -150,6 +150,8 @@ export function Player() {
 
     function resetPlayerBoard() {
         playerBoard = Gameboard();
+        placedShips = 0;
+        playerShips = placingShipsImages();
     }
 
     let playerShips = placingShipsImages();
