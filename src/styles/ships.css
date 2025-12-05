@@ -105,4 +105,5 @@
 
 .placed-ship {
     background-color: darkblue !important; 
+    pointer-events: none;
 }
