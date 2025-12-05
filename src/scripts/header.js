@@ -2,10 +2,10 @@ export let playerOneName = "Player One";
 export let playerTwoName = "Player Two";
 
 const playerOneInput = document.querySelector('#player-one-input');
-const playerTwoInput = document.querySelector('#player-two-input');
+export const playerTwoInput = document.querySelector('#player-two-input');
 
 const playerOneSpan = document.querySelector('#player-one-span');
-const playerTwoSpan = document.querySelector('#player-two-span');
+export const playerTwoSpan = document.querySelector('#player-two-span');
 
 playerOneInput.addEventListener('blur', () => {
     playerOneSpan.textContent = playerOneInput.value;
@@ -34,6 +34,5 @@ playerTwoInput.addEventListener('focus', () => {
 });
 
 document.querySelectorAll('.name-span').forEach(el => {
-    console.log(el);
     el.style.setProperty('--text-content', `"${el.textContent}"`);
 });
