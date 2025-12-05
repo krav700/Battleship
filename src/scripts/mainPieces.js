@@ -64,9 +64,7 @@ export function Gameboard() {
             while (placeV + shipLength - 1 > 9) {
                 placeV--;
             }
-            console.log(placeV);
             let tempPlaceV = placeV;
-            console.log(tempPlaceV);
             for (let i = 0; i < currentShip.length; i++) {
                 if (playerBoard[tempPlaceV++][placeH].type == 2) {
                     console.log("There is already a ship there");
@@ -111,7 +109,6 @@ export function Gameboard() {
             if (playerBoard[hitX][hitY].ship.isSunk()) {
                 sunkenShips++;
                 console.log("SUNKEN");
-                console.log(sunkenShips);
                 if (sunkenShips == 5) {
                     loose = true;
                 }
@@ -184,24 +181,28 @@ function placingShipsImages() {
         },
         bigShip: {
             ship: undefined,
+            shipObject: undefined,
             length: 4,
             tile: undefined,
             vertical: false
         },
         mediumShip: {
             ship: undefined,
+            shipObject: undefined,
             length: 3,
             tile: undefined,
             vertical: false
         },
         patrolShip: {
             ship: undefined,
+            shipObject: undefined,
             length: 2,
             tile: undefined,
             vertical: false
         },
         helpShip: {
             ship: undefined,
+            shipObject: undefined,
             length: 2,
             tile: undefined,
             vertical: false
