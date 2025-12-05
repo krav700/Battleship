@@ -85,6 +85,7 @@ body {
     display: grid;
     grid-template-rows: 1fr 3fr;
     font-family: 'ITC Machine';
+    border: 5px double silver;
 }
 
 #header {
@@ -138,7 +139,7 @@ input:focus {
 
 .name-span::before {
     position: absolute;
-    left: -10px;
+    left: -8px;
     top: 0;
     content: var(--text-content);
     color: black;
@@ -161,6 +162,7 @@ h1 {
     color: azure;
     position: relative;
     letter-spacing: 1rem;
+    text-align: center;
 }
 
 h1::before {
@@ -172,7 +174,7 @@ h1::before {
     z-index: -1;
 }
 
-#pass-turn {
+#pass-turn-button {
     color: white;
     background-color: gray;
     position: absolute;
@@ -183,20 +185,38 @@ h1::before {
     scale: 1.5;
 }
 
-.text {
-    position: relative;
+#pass-turn-button:hover {
+    background: #979393;
 }
 
-.text::before {
+#pass-turn-button:active {
+    background: #353333;
+}
+
+.pass-turn-button-text {
+    position: relative;
+    pointer-events: none;
+}
+
+.pass-turn-button-text.press-play::before {
     position: absolute;
-    left: -1px;
+    left: -1.5px;
     top: -1px;
-    content: "Passed The turn";
+    content: "PRESS PLAY";
     color: black;
     z-index: -1;
 }
 
-#pass-turn.dissappear {
+.pass-turn-button-text.pass-turn::before {
+    position: absolute;
+    left: -1.5px;
+    top: -1px;
+    content: "PASSED TURN";
+    color: black;
+    z-index: -1;
+}
+
+#pass-turn-button.dissappear {
     display: none;
 }
 
@@ -208,5 +228,9 @@ video {
     top: -30px;
     left: -2px;
     scale: 150%;
+    pointer-events: none;
+}
+
+.stop-input {
     pointer-events: none;
 }
