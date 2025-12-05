@@ -1,0 +1,50 @@
+dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    padding: 3rem;
+    background-color: #4a4646;
+    font-weight: bold;
+    border: 5px double silver;
+}
+
+::backdrop{
+    background: linear-gradient(gray 40% , black);
+    opacity: 0.75;
+}
+
+#dialog-gamemode-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5rem;
+}
+
+#dialog-heading::before {
+    position: absolute;
+    left: -8px;
+    top: 0;
+    content: "Play against";
+    color: black;
+    z-index: -1;
+}
+
+.dialog-button {
+    height: 5rem;
+    width: 10rem;
+    font-size: 2rem;
+}
+
+button {
+    border: 5px double silver;
+}
+
+button:hover {
+    background: #979393;
+}
+
+button:active {
+    background: #353333;
+}
