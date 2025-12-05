@@ -4,10 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BattleShip</title>
-    <!-- <link rel="stylesheet" href="styles/styles.css">
-    <link rel="stylesheet" href="styles/boardStyle.css">
-    <link rel="stylesheet" href="styles/ships.css"> -->
-    <!-- <script src="scripts/DOMInteraction.js" type="module" defer></script> -->
 </head>
 <body>
     <div id="header">
@@ -46,7 +42,7 @@
 
         <div class="playerOne-board board"></div>
         
-        <button id="pass-turn"><span class="text">Passed the turn</span></button>
+        <button id="pass-turn-button"><span class="pass-turn-button-text press-play">Press Play</span></button>
 
         <div class="playerTwo-board board"></div>
 
@@ -59,6 +55,21 @@
         </div>
 
     </div>
+
+    <dialog id="gameModeDialog" class="dialog-window">
+        <h1 id="dialog-heading">Play against</h1>
+
+        <div id="dialog-gamemode-buttons">
+            <form method="dialog" action="./scripts/header.js" id="playerDialogForm">
+                <button class="dialog-button">Player</button>
+            </form>
+
+            <form method="dialog" action="./scripts/header.js" id="computerDialogForm">
+                <button class="dialog-button">Computer</button>
+            </form>
+        </div>
+
+    </dialog>
 
 </body>
 </html>
