@@ -5,8 +5,8 @@
   "main": "main.js",
   "scripts": {
     "test": "jest --watchAll --verbose",
-    "start": "webpack serve --open --config ./webpack/webpack.dev.js",
-    "build": "webpack --config ./webpack/webpack.prod.js"
+    "start": "webpack serve --open --config ./webpack.dev.js",
+    "build": "webpack --config ./webpack.prod.js"
   },
   "repository": {
     "type": "git",
