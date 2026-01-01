@@ -4,6 +4,7 @@ import "../styles/ships.css";
 import "../styles/dialog.css";
 import { Player } from "./mainPieces.js";
 import explosionVideo from "../assets/explosionVideo.webm";
+import explosionVideoSafari from "../assets/explosionVideoSafari.mov"
 import {
     playerOneName,
     playerTwoName,
@@ -218,10 +219,18 @@ function addExplosion(waterTile) {
             const videoEl = document.createElement("video");
             videoEl.muted = true;
             videoEl.playsInline = true;
-            const source = document.createElement("source");
-            source.src = explosionVideo;
-            source.type = "video/webm";
-            videoEl.append(source);
+            if (supportsHEVCAlpha()) {
+                const sourceSafari = document.createElement("source");
+                sourceSafari.src = explosionVideoSafari;
+                sourceSafari.type = "video/quicktime";
+                sourceSafari.codecs = "hvc1";
+                videoEl.append(sourceSafari);
+            } else {
+                const source = document.createElement("source");
+                source.src = explosionVideo;
+                source.type = "video/webm";
+                videoEl.append(source);
+            }
             videoEl.currentTime = 0;
             waterTile.append(videoEl);
             videoEl.play();
@@ -233,6 +242,14 @@ function addExplosion(waterTile) {
         }
     }
 }
+
+function supportsHEVCAlpha() {
+    const navigator = window.navigator;
+    const ua = navigator.userAgent.toLowerCase()
+    const hasMediaCapabilities = !!(navigator.mediaCapabilities && navigator.mediaCapabilities.decodingInfo)
+    const isSafari = ((ua.indexOf('safari') != -1) && (!(ua.indexOf('chrome')!= -1) && (ua.indexOf('version/')!= -1)))
+    return isSafari && hasMediaCapabilities
+  }
 
 function useRecieveAttack(selectPlayer, waterTile) {
     const waterTileAll = document.querySelectorAll(".water-tile");
